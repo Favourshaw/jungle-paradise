@@ -2,6 +2,7 @@
 import SpookyGlassButton from "@/components/Button";
 import CardSwap, { Card } from "@/components/CardSwap";
 import CardSwapItem from "@/components/CardSwapItem";
+import Countdown from "@/components/countdown";
 import Dock from "@/components/Dock";
 import DramaticEmailForm from "@/components/EmailForm";
 import EmailPopup from "@/components/EmailPopup";
@@ -11,30 +12,6 @@ import TargetCursor from "@/components/TargetCursor";
 import { Settings } from "lucide-react";
 import Image from "next/image";
 import { GiMonkey } from "react-icons/gi";
-import {
-  VscAccount,
-  VscArchive,
-  VscHome,
-  VscSettingsGear,
-} from "react-icons/vsc";
-const items = [
-  { icon: <VscHome size={30} />, label: "Home", onClick: () => alert("Home!") },
-  {
-    icon: <VscArchive size={30} />,
-    label: "Archive",
-    onClick: () => alert("Archive!"),
-  },
-  {
-    icon: <VscAccount size={30} />,
-    label: "Profile",
-    onClick: () => alert("Profile!"),
-  },
-  {
-    icon: <VscSettingsGear size={30} />,
-    label: "Settings",
-    onClick: () => alert("Settings!"),
-  },
-];
 
 export default function Home() {
   return (
@@ -56,9 +33,9 @@ export default function Home() {
         <source src="/bg.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0 bg-primary/60 z-10"></div>
+      <div className="absolute inset-0 bg-black/60 z-10"></div>
 
-      <div className="flex flex-col justify-center mt-10">
+      <div className="flex flex-col justify-center my-24">
         <div className="max-w-[320px] z-40 mx-auto flex justify-center items-center flex-col gap-5 cursor-target ">
           <Image
             src="/logo.png"
@@ -75,15 +52,15 @@ export default function Home() {
         </div>
 
         <div
-          className="relative z-30 flex flex-col md:flex-row md:items-center md:justify-between
+          className="relative z-30 flex flex-col lg:flex-row lg:items-center lg:justify-between
                bg-white/10 backdrop-blur-xl border border-transparent
                m-6 sm:m-12 md:m-24 rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.4)]
-               hover:shadow-primary transition-all duration-500 overflow-hidden"
+               hover:shadow-primary transition-all duration-500 overflow-hidden "
         >
           <div className=" max-w-2xl space-y-4 ml-0 md:ml-32">
-            <div className="cursor-target flex gap-4 justify-center items-center text-2xl font-semibold text-text">
+            <div className="cursor-target flex gap-4 justify-center items-center text-2xl md:text-4xl font-semibold text-text">
               <GiMonkey size={55} className="text-text animate-bounce" />
-              Enter the Jungle Paradise
+              The Jungle Awakens December 20
             </div>
             <div className="">
               <div className="font-eater cursor-target  leading-relaxed text-green text-xs sm:text-sm md:text-2xl ">
@@ -102,6 +79,9 @@ export default function Home() {
                   Enter
                 </SpookyGlassButton>
               </div>
+              <div>
+                <Countdown targetDate="2025-12-20T21:00:00+01:00" />
+              </div>
             </div>
           </div>
 
@@ -114,16 +94,6 @@ export default function Home() {
         </div>
       </div>
       <EmailPopup />
-      {/* DOCK */}
-      <div className="relative z-40 cursor-target ">
-        <Dock
-          items={items}
-          panelHeight={80}
-          baseItemSize={65}
-          magnification={120}
-          className="z-40"
-        />
-      </div>
     </div>
   );
 }
