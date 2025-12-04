@@ -1,65 +1,110 @@
+"use client";
+import CardSwap, { Card } from "@/components/CardSwap";
+import CardSwapItem from "@/components/CardSwapItem";
+import Dock from "@/components/Dock";
+import DramaticEmailForm from "@/components/EmailForm";
+import EmailPopup from "@/components/EmailPopup";
+import { Settings } from "lucide-react";
 import Image from "next/image";
+import { GiMonkey } from "react-icons/gi";
+import {
+  VscAccount,
+  VscArchive,
+  VscHome,
+  VscSettingsGear,
+} from "react-icons/vsc";
+const items = [
+  { icon: <VscHome size={30} />, label: "Home", onClick: () => alert("Home!") },
+  {
+    icon: <VscArchive size={30} />,
+    label: "Archive",
+    onClick: () => alert("Archive!"),
+  },
+  {
+    icon: <VscAccount size={30} />,
+    label: "Profile",
+    onClick: () => alert("Profile!"),
+  },
+  {
+    icon: <VscSettingsGear size={30} />,
+    label: "Settings",
+    onClick: () => alert("Settings!"),
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="overflow-hidden min-h-screen bg-black relative jungle-ambient particles">
+      <video
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        autoPlay
+        loop
+        muted
+        playsInline
+      >
+        <source src="/bg.mp4" type="video/mp4" />
+      </video>
+
+      <div className="absolute inset-0 bg-primary/60 z-10"></div>
+
+      <div className="flex flex-col justify-center mt-10">
+        <div className="max-w-[320px] z-40 mx-auto flex justify-center items-center flex-col gap-5">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={150}
+            height={150}
+            sizes="320px"
+            className="transition-transform duration-500 group-hover:scale-105"
+            priority
+          />
+          <p className="text-center font-serif uppercase text-green">
+            wild paradise awaits
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        {/* MAIN CONTENT WRAPPER */}
+        <div
+          className="relative z-30 flex flex-col md:flex-row md:items-center md:justify-between
+               bg-white/10 backdrop-blur-xl border border-transparent
+               m-6 sm:m-12 md:m-24 rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.4)]
+               hover:shadow-primary transition-all duration-500 overflow-hidden"
+        >
+          <div className=" max-w-2xl space-y-4 ml-0 md:ml-32">
+            <div className="flex gap-4 justify-center items-center text-2xl font-semibold text-text">
+              <GiMonkey size={55} className="text-text animate-bounce" />
+              Enter the Jungle Paradise
+            </div>
+
+            <p className="font-eater  leading-relaxed text-green text-2xl">
+              Get ready for the ultimate jungle beach experience! Dive into
+              vibrant nights filled with pulsating music, tropical cocktails,
+              and playful water games under the stars. Lounge on golden sands,
+              feel the ocean breeze, and immerse yourself in adventure and
+              unforgettable moments. This is where the jungle meets the beach —
+              wild, exhilarating, and completely unforgettable.
+            </p>
+          </div>
+
+          {/* CARD SECTION */}
+          <div>
+            <div className="z-20 relative h-80 md:h-[600px]">
+              <CardSwapItem />
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
+      <EmailPopup />
+      {/* DOCK */}
+      <div className="relative z-40">
+        <Dock
+          items={items}
+          panelHeight={80}
+          baseItemSize={65}
+          magnification={120}
+          className="z-40"
+        />
+      </div>
     </div>
   );
 }
