@@ -88,9 +88,9 @@ function DockItem({
       onBlur={() => isHovered.set(0)}
       onClick={onClick}
       className={`relative inline-flex items-center justify-center rounded-2xl backdrop-blur-xl backdrop-saturate-150 
-        bg-gradient-to-br from-white/15 to-white/5 border border-white/20 
+        bg-linear-to-br from-white/15 to-white/5 border border-white/20 
         shadow-[0_8px_32px_rgba(0,0,0,0.2),inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(0,0,0,0.1)]
-        before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-b before:from-white/10 before:to-transparent before:opacity-0 before:transition-opacity
+        before:absolute before:inset-0 before:rounded-2xl before:bg-linear-to-b before:from-white/10 before:to-transparent before:opacity-0 before:transition-opacity
         hover:before:opacity-100 hover:shadow-[0_12px_40px_rgba(204,204,0,0.3),inset_0_1px_0_rgba(255,255,255,0.4)]
         transition-all duration-300 ease-out ${className}`}
       tabIndex={0}
@@ -192,7 +192,7 @@ export default function Dock({
 
   return (
     <motion.div
-      style={{ height, scrollbarWidth: "none" }}
+      style={{ height: "0", scrollbarWidth: "none" }}
       className="mx-2 flex max-w-full items-center justify-center"
     >
       <motion.div

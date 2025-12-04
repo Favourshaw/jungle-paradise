@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Eater, Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Docks from "./Dock";
+import Header from "@/components/Header";
 
 <link
   href="https://fonts.googleapis.com/css2?family=Eater&family=Geist:wght@100..900&family=Sora:wght@100..800&display=swap"
@@ -38,7 +40,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${eater.variable} antialiased`}
       >
-        <div className={eater.className}>{children}</div>
+        <div className={eater.className}>
+          <Header />
+          {children}
+
+          <Docks />
+        </div>
       </body>
     </html>
   );
