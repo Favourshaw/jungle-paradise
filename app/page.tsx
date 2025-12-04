@@ -53,8 +53,8 @@ export default function Home() {
           <Image
             src="/logo.png"
             alt="logo"
-            width={150}
-            height={150}
+            width={120}
+            height={120}
             sizes="320px"
             className="transition-transform duration-500 group-hover:scale-105"
             priority
@@ -63,7 +63,7 @@ export default function Home() {
             wild paradise awaits
           </p>
         </div>
-        {/* MAIN CONTENT WRAPPER */}
+
         <div
           className="relative z-30 flex flex-col md:flex-row md:items-center md:justify-between
                bg-white/10 backdrop-blur-xl border border-transparent
@@ -76,7 +76,7 @@ export default function Home() {
               Enter the Jungle Paradise
             </div>
 
-            <p className="font-eater  leading-relaxed text-green text-2xl">
+            <p className="font-eater  leading-relaxed text-green text-xs sm:text-sm md:text-2xl">
               Get ready for the ultimate jungle beach experience! Dive into
               vibrant nights filled with pulsating music, tropical cocktails,
               and playful water games under the stars. Lounge on golden sands,
