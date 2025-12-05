@@ -144,7 +144,7 @@ function DockLabel({ children, className = "", isHovered }: DockLabelProps) {
           style={{ x: "-50%" }}
         >
           <div className="relative z-10">{children}</div>
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-b from-[#cccc00]/20 to-transparent opacity-50" />
+          <div className="absolute inset-0 rounded-xl bg-linear-to-b from-[#cccc00]/20 to-transparent opacity-50" />
         </motion.div>
       )}
     </AnimatePresence>

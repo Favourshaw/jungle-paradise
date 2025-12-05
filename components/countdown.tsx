@@ -117,7 +117,7 @@ export default function JungleCountdown({ targetDate }: CountdownProps) {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1.2, opacity: 1 }}
-            transition={{ duration: 1, yoyo: Infinity }}
+            transition={{ duration: 1 }}
             className="absolute inset-0 flex items-center justify-center text-4xl md:text-6xl font-extrabold text-white text-center pointer-events-none"
           >
             🌴🎉 Wild Paradise is LIVE! 🎉🌴
