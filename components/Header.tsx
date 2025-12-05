@@ -89,18 +89,22 @@ export default function Header(): JSX.Element {
   );
 }
 
-/** small clock component used in the mobile header */
 function ClockSmall(): JSX.Element {
-  const [time, setTime] = React.useState(() => {
-    const d = new Date();
-    return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-  });
+  const [time, setTime] = React.useState("--:--");
 
   React.useEffect(() => {
-    const id = setInterval(() => {
-      const d = new Date();
-      setTime(d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-    }, 30_000);
+    const updateTime = () => {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      const displayHours = hours % 12 || 12;
+
+      setTime(`${displayHours}:${minutes} ${ampm}`);
+    };
+
+    updateTime();
+    const id = setInterval(updateTime, 30000);
     return () => clearInterval(id);
   }, []);
 
