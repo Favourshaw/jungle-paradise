@@ -63,28 +63,23 @@ export default function Header(): JSX.Element {
         </div>
       </div>
 
-      {/* iPhone-style (mobile) */}
       <div className="md:hidden bg-linear-to-b from-black/30 to-black/20 backdrop-blur-sm border-b border-white/6">
         <div className="relative h-14 flex items-center justify-between px-3">
-          {/* left: time */}
           <div className="text-sm text-slate-100 font-medium">
             <ClockSmall />
           </div>
 
-          {/* center: carrier / title */}
           <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 pointer-events-none">
             <div className="text-sm text-slate-100 font-semibold">
               Jungle Paradise
             </div>
           </div>
 
-          {/* right: status icons */}
           <div className="flex items-center gap-3 text-slate-100">
             <WifiCog />
             <BatteryFull />
           </div>
 
-          {/* small notch hint (visual only) */}
           <div className="absolute left-1/2 -translate-x-1/2 top-0 transform translate-y-1.5 pointer-events-none">
             <div className="w-36 h-6 bg-black/40 rounded-b-xl blur-sm" />
           </div>
@@ -109,5 +104,9 @@ function ClockSmall(): JSX.Element {
     return () => clearInterval(id);
   }, []);
 
-  return <span aria-hidden>{time}</span>;
+  return (
+    <>
+      <span aria-hidden>{time}</span>
+    </>
+  );
 }
