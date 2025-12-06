@@ -9,10 +9,11 @@ import {
   VscHome,
   VscSettingsGear,
 } from "react-icons/vsc";
-import { Ticket, TicketIcon } from "lucide-react";
+import { Store, Ticket, TicketIcon } from "lucide-react";
 import { BsTicketDetailed } from "react-icons/bs";
 import { LuTicketsPlane } from "react-icons/lu";
-import { MdSupportAgent } from "react-icons/md";
+import { MdSell, MdSupportAgent } from "react-icons/md";
+import { GiJungle } from "react-icons/gi";
 
 export default function Docks(): JSX.Element {
   const router = useRouter();
@@ -33,15 +34,15 @@ export default function Docks(): JSX.Element {
       },
       {
         id: "vendor",
-        icon: <VscAccount size={30} />,
+        icon: <Store size={30} />,
         label: "Vendor",
         onClick: () => router.push("/vendor"),
       },
       {
-        id: "contact",
-        icon: <MdSupportAgent size={30} />,
-        label: "Contact",
-        onClick: () => router.push("/contact"),
+        id: "about",
+        icon: <GiJungle size={30} />,
+        label: "About",
+        onClick: () => router.push("/about"),
       },
     ],
     [router]
