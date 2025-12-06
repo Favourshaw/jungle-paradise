@@ -5,42 +5,26 @@ import React, { JSX } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import TargetCursor from "@/components/TargetCursor";
+import DecryptedText from "@/components/DecryptedText";
 
 const socials = [
   {
     id: "instagram",
     label: "Instagram",
-    href: "https://instagram.com/yourhandle",
-    short: "@yourhandle",
+    href: "https://www.instagram.com/the_jungleparadise",
+    short: "@the_jungleparadise",
   },
-  {
-    id: "x",
-    label: "X (Twitter)",
-    href: "https://x.com/yourhandle",
-    short: "@yourhandle",
-  },
+
   {
     id: "tiktok",
     label: "TikTok",
-    href: "https://www.tiktok.com/@yourhandle",
-    short: "@yourhandle",
-  },
-  {
-    id: "youtube",
-    label: "YouTube",
-    href: "https://youtube.com/@yourchannel",
-    short: "WildParadise",
-  },
-  {
-    id: "facebook",
-    label: "Facebook",
-    href: "https://facebook.com/yourpage",
-    short: "/yourpage",
+    href: "https://www.tiktok.com/@the_jungleparadise",
+    short: "@the_jungleparadise",
   },
 ];
 
-const PHONE = "+44 20 7946 0958";
-const EMAIL = "hi@wildparadise.example";
+const PHONE = "+234 8137642173";
+const EMAIL = "support@jungleparadise.xyz";
 
 // Event: set your event date/time in ISO format and human string
 const EVENT_START_ISO = "2026-06-20T21:00:00+01:00"; // Nigeria time (WAT)
@@ -63,7 +47,7 @@ function googleCalendarLink() {
   return url.toString();
 }
 
-export default function ContactPage(): JSX.Element {
+export default function About(): JSX.Element {
   return (
     <main className="overflow-hidden min-h-screen bg-black relative text-slate-100 py-16 px-6">
       <TargetCursor
@@ -99,12 +83,66 @@ export default function ContactPage(): JSX.Element {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start ">
+        <div>
           <motion.section
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "circOut" }}
-            className="relative rounded-3xl p-8 shadow-2xl bg-white/6 border border-white/6 backdrop-blur-md overflow-hidden cursor-target"
+            className="relative rounded-3xl p-8 shadow-2xl bg-white/6 border border-white/6 backdrop-blur-md overflow-hidden  mb-8 cursor-target"
+            aria-labelledby="contact-heading"
+          >
+            <div style={{ marginTop: "4rem" }}>
+              <DecryptedText
+                text="Welcome to Jungle Paradise, the island escape accessible only by sea."
+                animateOn="view"
+                speed={100}
+              />
+            </div>
+
+            <div style={{ marginTop: "4rem" }}>
+              <DecryptedText
+                text="Leave the mainland behind and board the boat to a world curated for the bold, the stylish, and the effortlessly cool. As the shore recedes, anticipation builds for the secluded haven awaiting you."
+                speed={200}
+                animateOn="view"
+                maxIterations={20}
+                characters="ABCD1234!?"
+                parentClassName="all-letters"
+                encryptedClassName="encrypted"
+              />
+            </div>
+
+            <div style={{ marginTop: "2rem" }}>
+              <DecryptedText
+                text="Here, on our private island, sunlight dances through a canopy of palms, and the air is perfumed with salt spray and tropical blossoms. Every sun-drenched deck, shaded lounge, and sandy cove is thoughtfully crafted for pure, easy-going vibes."
+                animateOn="view"
+                speed={300}
+              />
+            </div>
+
+            <div style={{ marginTop: "2rem" }}>
+              <DecryptedText
+                text="This is more than a party. it's Jungle Paradise, your elevated, members-only retreat. Accessible by invitation and vessel, it blends the laid-back elegance of a beach house with the untamed beauty of an island oasis. It's a sanctuary designed for connection, barefoot luxury, and moments so pristine they feel untouched."
+                animateOn="view"
+                speed={400}
+              />
+            </div>
+
+            <div style={{ marginTop: "2rem" }}>
+              <DecryptedText
+                text="Your voyage is part of the experience. Unwind, mingle with fellow travelers, and discover bliss in the most exclusive paradise where the journey is just as memorable as the destination."
+                animateOn="view"
+                speed={500}
+              />
+            </div>
+          </motion.section>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start ">
+          <motion.section
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "circOut" }}
+            className="relative rounded-3xl p-8 shadow-2xl bg-white/6 border border-white/6 backdrop-blur-md overflow-hidden cursor-target mb-12"
             aria-labelledby="contact-heading"
           >
             <div
@@ -197,7 +235,7 @@ export default function ContactPage(): JSX.Element {
                 Follow & stay updated
               </h2>
 
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3">
                 {socials.map((s) => (
                   <motion.li
                     key={s.id}
@@ -211,7 +249,7 @@ export default function ContactPage(): JSX.Element {
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-medium text-emerald-100 hover:underline"
+                        className="font-medium text-emerald-100 hover:underline text-sm"
                       >
                         {s.short}
                       </a>
@@ -241,8 +279,14 @@ export default function ContactPage(): JSX.Element {
           >
             {/* Poster */}
             <div className="rounded-xl overflow-hidden border border-white/6">
-              <div className="w-full h-56 bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-900 flex items-center justify-center text-slate-200/20">
-                Event poster placeholder
+              <div className="relative w-full h-95 bg-linear-to-br from-primary/30 via-black/50 to-green/90 flex items-center justify-center text-slate-200/20">
+                <Image
+                  src="/bgt.png"
+                  alt="bgt"
+                  fill
+                  className="transition-transform duration-500 group-hover:scale-105 z-40 relative"
+                  priority
+                />
               </div>
             </div>
 
@@ -260,7 +304,7 @@ export default function ContactPage(): JSX.Element {
                   href={`mailto:${EMAIL}?subject=${encodeURIComponent(
                     "RSVP — " + EVENT_TITLE
                   )}`}
-                  className="inline-flex items-center gap-3 rounded-2xl bg-gradient-to-r from-emerald-400 to-cyan-400 text-black font-semibold px-4 py-2 shadow-lg border border-white/10"
+                  className="inline-flex items-center gap-3 rounded-2xl bg-linear-to-r from-emerald-400 to-cyan-400 text-black font-semibold px-4 py-2 shadow-lg border border-white/10"
                 >
                   RSVP via Email
                 </a>
@@ -273,7 +317,7 @@ export default function ContactPage(): JSX.Element {
                   href={`tel:${PHONE.replace(/\s+/g, "")}`}
                 >
                   Call us
-                </a>{" "}
+                </a>
                 or message us via socials.
               </div>
             </div>
