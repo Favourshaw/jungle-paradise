@@ -14,9 +14,8 @@ function CardSwapItem() {
         {/* Card 1 — Party fun */}
         <Card>
           <div className="relative h-full w-full rounded-2xl overflow-hidden shadow-2xl group card-fade-in ">
-            {/* next/image using fill to cover the container */}
             <Image
-              src="/billie.jpg"
+              src="/jp3.jpg"
               alt="Party scene"
               fill
               sizes="320px"
@@ -26,7 +25,6 @@ function CardSwapItem() {
             <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/20 to-transparent" />
             <header className="relative z-10 flex items-center gap-3 p-4 backdrop-blur-lg bg-primary/50">
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur">
-                {/* party icon */}
                 <svg
                   width="18"
                   height="18"
@@ -48,7 +46,9 @@ function CardSwapItem() {
             </header>
             <div className="absolute left-0 right-0 top-50 z-10 p-8 m-4 backdrop-blur-md bg-primary/5 rounded-2xl">
               <p className="text-sm text-green ">
-                Vibrant nights, great music — your guide to fun parties.
+                An exclusive invite-only 18+ experience! Dance under the stars,
+                enjoy lively music, and make unforgettable memories with
+                friends. The ultimate night of fun awaits you!
               </p>
             </div>
           </div>
@@ -60,7 +60,7 @@ function CardSwapItem() {
             style={{ animationDelay: "120ms" }}
           >
             <Image
-              src="/billie.jpg"
+              src="/jp2.jpg"
               alt="Beach"
               fill
               sizes="320px"
@@ -69,7 +69,6 @@ function CardSwapItem() {
             <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/20 to-transparent" />
             <header className="relative z-10 flex items-center gap-3 p-4 backdrop-blur-lg bg-primary/50">
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur">
-                {/* beach icon */}
                 <svg
                   width="18"
                   height="18"
@@ -94,11 +93,13 @@ function CardSwapItem() {
                   />
                 </svg>
               </div>
-              <h3 className="text-white text-lg font-semibold">Sunny Beach</h3>
+              <h3 className="text-text text-lg font-semibold">Sunny Beach</h3>
             </header>
             <div className="absolute left-0 right-0 top-50 z-10 p-8 m-4 backdrop-blur-md bg-primary/5 rounded-2xl">
               <p className="text-sm text-green ">
-                Vibrant nights, great music — your guide to fun parties.
+                Feel the sand between your toes and the sea breeze on your face.
+                Our private beach setup invites you to relax, enjoy the waves,
+                and soak up the sun before the night party kicks in!
               </p>
             </div>
           </div>
@@ -111,7 +112,7 @@ function CardSwapItem() {
             style={{ animationDelay: "240ms" }}
           >
             <Image
-              src="/billie.jpg"
+              src="/jg1.png"
               alt="Girls group"
               fill
               sizes="320px"
@@ -120,7 +121,6 @@ function CardSwapItem() {
             <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/20 to-transparent" />
             <header className="relative z-10 flex items-center gap-3 p-4 backdrop-blur-lg bg-primary/50">
               <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center backdrop-blur">
-                {/* girls icon */}
                 <svg
                   width="18"
                   height="18"
@@ -145,13 +145,15 @@ function CardSwapItem() {
                   />
                 </svg>
               </div>
-              <h3 className="text-white text-lg font-semibold">
-                Girls Hangout
+              <h3 className="text-text text-lg font-semibold">
+                Ultimate Hangout
               </h3>
             </header>
             <div className="absolute left-0 right-0 top-50 z-10 p-8 m-4 backdrop-blur-md bg-primary/5 rounded-2xl">
               <p className="text-sm text-green ">
-                Vibrant nights, great music — your guide to fun parties.
+                Bring your crew and join the ultimate hangout! Exclusive beach
+                vibes, boat rides, and music make this a perfect getaway for you
+                and your friends. Fun, laughter, and memories guaranteed!
               </p>
             </div>
           </div>

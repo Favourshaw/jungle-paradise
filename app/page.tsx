@@ -79,7 +79,7 @@ export default function Home() {
                   onClick={() => setOpen(true)}
                   className="w-full mt-5"
                 >
-                  Explore Your Options
+                  Explore
                 </SpookyGlassButton>
 
                 <BuyOrVendorModal open={open} onClose={() => setOpen(false)} />

@@ -33,10 +33,10 @@ export default function Docks(): JSX.Element {
         onClick: () => router.push("/ticket"),
       },
       {
-        id: "vendor",
+        id: "vendors",
         icon: <Store size={30} />,
         label: "Vendor",
-        onClick: () => router.push("/vendor"),
+        onClick: () => router.push("/vendors"),
       },
       {
         id: "about",
