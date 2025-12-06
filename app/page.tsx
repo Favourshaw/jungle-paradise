@@ -9,11 +9,14 @@ import EmailPopup from "@/components/EmailPopup";
 import FloatingBackgroundImages from "@/components/FloatingIcons";
 import FloatingBackgroundIcons from "@/components/FloatingIcons";
 import TargetCursor from "@/components/TargetCursor";
+import BuyOrVendorModal from "@/components/TicketVendor";
 import { Settings } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 import { GiMonkey } from "react-icons/gi";
 
 export default function Home() {
+  const [open, setOpen] = useState(false);
   return (
     <div className="overflow-hidden min-h-screen bg-black relative jungle-ambient particles">
       <TargetCursor
@@ -73,11 +76,13 @@ export default function Home() {
               </div>
               <div className="cursor-target ">
                 <SpookyGlassButton
-                  onClick={() => alert("Eerie!")}
+                  onClick={() => setOpen(true)}
                   className="w-full mt-5"
                 >
-                  Enter
+                  Explore Your Options
                 </SpookyGlassButton>
+
+                <BuyOrVendorModal open={open} onClose={() => setOpen(false)} />
               </div>
               <div>
                 <Countdown targetDate="2025-12-20T21:00:00+01:00" />
