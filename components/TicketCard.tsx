@@ -1,9 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import React from "react";
 import Payment from "./payment";
+import Tix from "./Tix";
+import Portal from "./Portal";
 
 interface TicketProps {
   tier: "EARLY BIRD" | "REGULAR" | "VIP";
@@ -19,6 +22,8 @@ interface TicketProps {
   maskBlur?: number; // px amount to blur the mask (creates soft haze)
   maskBlendMode?: React.CSSProperties["mixBlendMode"]; // e.g. "overlay" | "multiply"
 }
+
+type PopupState = "main" | "crypto" | "naira" | null;
 
 export default function JungleTicket({
   tier,
@@ -43,83 +48,289 @@ export default function JungleTicket({
     pointerEvents: "none",
   };
 
+  const [popup, setPopup] = useState<PopupState>(null);
+
+  const handleCardClick = () => {
+    if (disabled) return;
+    setPopup("main");
+  };
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.92, y: 22 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      whileHover={{ scale: disabled ? 1 : 1.04 }}
-      transition={{ duration: 0.45, ease: "easeOut" }}
-      className={`relative w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-2xl border-2
-        ${disabled ? "opacity-40 blur-[1.5px] pointer-events-none" : ""}`}
-      aria-hidden={disabled}
-    >
-      {/* background image */}
-      <div className="absolute inset-0">
-        <Image
-          src={bgImage}
-          alt="ticket background"
-          fill
-          className="object-cover"
-        />
-      </div>
-
-      {/* NEW: per-ticket color mask (tint + blur) */}
-      <div className="absolute inset-0" style={maskStyle} aria-hidden />
-
-      {/* extra vignette/darken to improve contrast */}
-      <div className="absolute inset-0 bg-black/28 pointer-events-none" />
-
-      {/* content */}
-      <div className="relative px-6 py-8 text-center space-y-3 z-10">
-        <div className="flex justify-center">
-          <Image src="/logo.png" alt="logo" width={72} height={72} />
+    <>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 22 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        whileHover={{ scale: disabled ? 1 : 1.04 }}
+        transition={{ duration: 0.45, ease: "easeOut" }}
+        className={`relative w-full max-w-md mx-auto rounded-xl overflow-hidden shadow-2xl border-2
+          ${
+            disabled
+              ? "opacity-40 blur-[1.5px] pointer-events-none"
+              : "cursor-pointer"
+          }`}
+        aria-hidden={disabled}
+        onClick={handleCardClick}
+        role={disabled ? undefined : "button"}
+        tabIndex={disabled ? -1 : 0}
+        onKeyDown={(e) => {
+          if (!disabled && (e.key === "Enter" || e.key === " ")) {
+            e.preventDefault();
+            handleCardClick();
+          }
+        }}
+      >
+        {/* background image */}
+        <div className="absolute inset-0">
+          <Image
+            src={bgImage}
+            alt="ticket background"
+            fill
+            className="object-cover"
+          />
         </div>
 
-        <p
-          className="text-lg font-bold tracking-widest"
-          style={{ color: highlightColor }}
-        >
-          {tier} TICKET
-        </p>
+        {/* NEW: per-ticket color mask (tint + blur) */}
+        <div className="absolute inset-0" style={maskStyle} aria-hidden />
 
-        <div
-          className="text-[64px] sm:text-[72px] font-extrabold"
-          style={{ color: highlightColor }}
-        >
-          {price}$
-        </div>
+        {/* extra vignette/darken to improve contrast */}
+        <div className="absolute inset-0 bg-black/28 pointer-events-none" />
 
-        {/* old price + animated strike */}
-        {oldPrice && (
-          <div className="relative w-fit mx-auto">
-            <span className="text-xl font-semibold text-white/75">
-              {oldPrice}$
-            </span>
-            <motion.div
-              className="absolute top-1/2 left-0 h-[3px] w-full bg-green-400"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-            />
+        {/* content */}
+        <div className="relative px-6 py-8 text-center space-y-3 z-10">
+          <div className="flex justify-center">
+            <Image src="/logo.png" alt="logo" width={72} height={72} />
           </div>
+
+          <p
+            className="text-lg font-bold tracking-widest"
+            style={{ color: highlightColor }}
+          >
+            {tier} TICKET
+          </p>
+
+          <div
+            className="text-[64px] sm:text-[72px] font-extrabold"
+            style={{ color: highlightColor }}
+          >
+            {price}$
+          </div>
+
+          {/* old price + animated strike */}
+          {oldPrice && (
+            <div className="relative w-fit mx-auto">
+              <span className="text-xl font-semibold text-white/75">
+                {oldPrice}$
+              </span>
+              <motion.div
+                className="absolute top-1/2 left-0 h-[3px] w-full bg-green-400"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              />
+            </div>
+          )}
+
+          <p className="text-green-200 text-md sm:text-lg font-semibold tracking-wide">
+            BOAT RIDES + GENERAL ACCESS + COMPLIMENTARY COCKTAILS
+          </p>
+
+          <p className="text-xs mt-4 text-green-300 tracking-wider">
+            TICKETS AT JUNGLEPARADISE.XYZ
+          </p>
+        </div>
+
+        {/* animated glow border */}
+        <motion.div
+          className="absolute inset-0 rounded-xl border-2 pointer-events-none"
+          style={{ borderColor: highlightColor }}
+          animate={{ opacity: [0.35, 0.95, 0.35] }}
+          transition={{ repeat: Infinity, duration: 3.2, ease: "easeInOut" }}
+        />
+      </motion.div>
+
+      {/* Popups */}
+      <AnimatePresence>
+        {popup === "main" && (
+          <Portal>
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/70 z-[99999] pointer-events-auto"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setPopup(null)}
+              />
+
+              <motion.div className="fixed inset-0 flex items-center justify-center z-[100000] p-4">
+                <motion.div
+                  className="
+                  max-w-sm w-full p-8 rounded-2xl text-center space-y-6
+                  border border-white/20
+                  bg-white/10 
+                  backdrop-blur-xl 
+                  shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                "
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                >
+                  <h2 className="text-2xl font-bold text-[#b8ffa0]">
+                    Choose Payment Method
+                  </h2>
+
+                  <div className="grid gap-3">
+                    <button
+                      className="w-full py-3 bg-[#b8ffa0] text-[#002800] rounded-lg font-bold"
+                      onClick={() => setPopup("crypto")}
+                    >
+                      Crypto
+                    </button>
+
+                    <button
+                      className="w-full py-3 bg-white text-[#002800] rounded-lg font-bold"
+                      onClick={() => setPopup("naira")}
+                    >
+                      Naira
+                    </button>
+                  </div>
+
+                  <button
+                    className="mt-3 text-white underline"
+                    onClick={() => setPopup(null)}
+                  >
+                    Cancel
+                  </button>
+                </motion.div>
+              </motion.div>
+            </>
+          </Portal>
         )}
 
-        <p className="text-green-200 text-md sm:text-lg font-semibold tracking-wide">
-          BOAT RIDES + GENERAL ACCESS + COMPLIMENTARY COCKTAILS
-        </p>
+        {popup === "crypto" && (
+          <Portal>
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/70 z-[90] cursor-pointer"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setPopup(null)}
+              />
 
-        <p className="text-xs mt-4 text-green-300 tracking-wider">
-          TICKETS AT JUNGLEPARADISE.XYZ
-        </p>
-      </div>
+              <motion.div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
+                <motion.div
+                  className="
+                  max-w-sm w-full p-8 rounded-2xl text-center space-y-6
+                  border border-white/20
+                  bg-white/10 
+                  backdrop-blur-xl 
+                  shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                "
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                >
+                  <h2 className="text-2xl font-bold text-[#b8ffa0] drop-shadow-md">
+                    Crypto Payment Info
+                  </h2>
 
-      {/* animated glow border */}
-      <motion.div
-        className="absolute inset-0 rounded-xl border-2 pointer-events-none"
-        style={{ borderColor: highlightColor }}
-        animate={{ opacity: [0.35, 0.95, 0.35] }}
-        transition={{ repeat: Infinity, duration: 3.2, ease: "easeInOut" }}
-      />
-    </motion.div>
+                  <p className="text-white/90">
+                    To pay with crypto, please contact us:
+                  </p>
+
+                  <div className="space-y-1">
+                    <a
+                      className="block text-white font-semibold hover:text-[#b8ffa0] transition"
+                      href="tel:+2348137642173"
+                    >
+                      Call: +2348137642173
+                    </a>
+                    <a
+                      className="block text-white font-semibold hover:text-[#b8ffa0] transition"
+                      href="mailto:support@jungleparadise.xyz"
+                    >
+                      Email: support@jungleparadise.xyz
+                    </a>
+                  </div>
+
+                  <div className="flex gap-3 justify-center mt-4">
+                    <a
+                      href="tel:+2348137642173"
+                      className="
+                      px-4 py-2 rounded-lg font-semibold
+                      bg-[#b8ffa0]/90 text-[#002800]
+                      shadow hover:bg-[#b8ffa0] 
+                      transition
+                    "
+                    >
+                      Call
+                    </a>
+
+                    <a
+                      href="mailto:support@jungleparadise.xyz"
+                      className="
+                      px-4 py-2 rounded-lg font-semibold
+                      bg-white/90 text-[#002800]
+                      shadow hover:bg-white 
+                      transition
+                    "
+                    >
+                      Email
+                    </a>
+                  </div>
+
+                  <button
+                    className="mt-3 text-white/80 underline hover:text-white transition"
+                    onClick={() => setPopup(null)}
+                  >
+                    Close
+                  </button>
+                </motion.div>
+              </motion.div>
+            </>
+          </Portal>
+        )}
+
+        {popup === "naira" && (
+          <Portal>
+            <>
+              <motion.div
+                className="fixed inset-0 bg-black/70 z-[90]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setPopup(null)}
+              />
+              <motion.div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
+                <motion.div
+                  className="
+                  max-w-4xl w-full p-8 rounded-2xl text-center space-y-6
+                  border border-white/20
+                  bg-white/10 
+                  backdrop-blur-xl 
+                  shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                "
+                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                  animate={{ scale: 1, opacity: 1, y: 0 }}
+                  exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                >
+                  {/* Render Payment component (developer: include widget inside Payment) */}
+                  <Tix />
+
+                  <div className="mt-4 text-right">
+                    <button
+                      className="text-white underline"
+                      onClick={() => setPopup(null)}
+                    >
+                      Close
+                    </button>
+                  </div>
+                </motion.div>
+              </motion.div>
+            </>
+          </Portal>
+        )}
+      </AnimatePresence>
+    </>
   );
 }

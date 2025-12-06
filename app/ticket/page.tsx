@@ -4,6 +4,7 @@
 import FloatingBackgroundImages from "@/components/FloatingIcons";
 import TargetCursor from "@/components/TargetCursor";
 import JungleTicket from "@/components/TicketCard";
+import VipTicket from "@/components/VipTicket";
 import Image from "next/image";
 
 export default function TicketsPage() {
@@ -46,13 +47,20 @@ export default function TicketsPage() {
           Tickets
         </h2>
 
+        <div className="text-center font-sans text-text text-lg font-semibold mb-6">
+          For tables, cabanas and suites bookings call:
+          <a href="tel:+2349153045940" className="underline ml-1">
+            +234 915 304 5940
+          </a>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <JungleTicket
             tier="EARLY BIRD"
             price="35"
             oldPrice="50"
             highlightColor="#C7FF00"
-            bgImage="/early.jpg"
+            bgImage="/jp3.jpg"
             maskColor="rgba(10,200,120,0.22)"
             maskOpacity={1}
             maskBlur={10}
@@ -64,23 +72,22 @@ export default function TicketsPage() {
             price="50"
             disabled
             highlightColor="#FFD166"
-            bgImage="/reg.jpg"
+            bgImage="/monk.jpg"
             // warmer subtle mask and slightly more blur to indicate 'coming soon'
             maskColor="rgba(240,160,40,0.14)"
             maskOpacity={1}
-            maskBlur={16}
+            maskBlur={10}
             maskBlendMode="multiply"
           />
 
-          <JungleTicket
+          <VipTicket
             tier="VIP"
-            price="120"
-            disabled
+            price="100"
             highlightColor="#FF7AB6"
-            bgImage="/vip.jpg"
+            bgImage="/monk2.jpg"
             maskColor="rgba(160,50,140,0.16)"
             maskOpacity={1}
-            maskBlur={18}
+            maskBlur={10}
             maskBlendMode="overlay"
           />
         </div>
