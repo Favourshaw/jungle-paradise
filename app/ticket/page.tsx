@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function TicketsPage() {
   return (
-    <div className="min-h-screen bg-[#061618] py-20 px-6 flex flex-col gap-8 justify-center items-center">
+    <div className="min-h-screen bg-[#061618] py-20 px-6 flex flex-col gap-8 justify-center items-center ">
       <TargetCursor
         spinDuration={2}
         hideDefaultCursor={true}
@@ -17,7 +17,7 @@ export default function TicketsPage() {
       <FloatingBackgroundImages />
       <video
         aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        className="fixed inset-0 w-full h-full object-cover opacity-60 z-0 pointer-events-none"
         autoPlay
         loop
         muted
@@ -26,7 +26,7 @@ export default function TicketsPage() {
         <source src="/bg.mp4" type="video/mp4" />
       </video>
 
-      <div className="absolute inset-0 bg-black/60 z-10"></div>
+      <div className=" fixed inset-0 bg-black/60 z-10"></div>
       <div className="max-w-[320px] z-40 mx-auto flex justify-center items-center flex-col gap-5 cursor-target ">
         <Image
           src="/logo.png"
@@ -41,7 +41,7 @@ export default function TicketsPage() {
           wild paradise awaits
         </p>
       </div>
-      <div className="backdrop-blur-2xl bg-black/20 w-fit p-11 rounded-2xl mb-10 z-40">
+      <div className="backdrop-blur-2xl bg-black/20 w-fit p-11 rounded-2xl mb-10 z-40 cursor-target">
         <h2 className="text-center text-3xl font-bold text-green-300 mb-8">
           Tickets
         </h2>
