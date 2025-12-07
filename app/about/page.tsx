@@ -1,12 +1,75 @@
-// app/contact/page.tsx
 "use client";
 
-import React, { JSX } from "react";
-import { motion } from "framer-motion";
+import React, { JSX, useMemo } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import TargetCursor from "@/components/TargetCursor";
-import DecryptedText from "@/components/DecryptedText";
 
+const TargetCursor = dynamic(() => import("@/components/TargetCursor"), {
+  ssr: false,
+  loading: () => null,
+});
+const DecryptedText = dynamic(() => import("@/components/DecryptedText"), {
+  ssr: false,
+  loading: () => <p className="animate-pulse text-slate-400">Loading…</p>,
+});
+const BackgroundVideo = dynamic(() => import("@/components/BgVideo"), {
+  ssr: false,
+  loading: () => null,
+});
+
+const AnimatedSection = dynamic(
+  () =>
+    import("framer-motion").then((m) => {
+      const MotionSection = (props: any) => {
+        const { children, ...rest } = props;
+        return (
+          <m.motion.section
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "circOut" }}
+            {...rest}
+          >
+            {children}
+          </m.motion.section>
+        );
+      };
+      return { default: MotionSection };
+    }),
+  { ssr: false, loading: () => <section className="opacity-0" /> }
+);
+
+const AnimatedListItem = dynamic(
+  () =>
+    import("framer-motion").then((m) => {
+      const Item = (props: any) => (
+        <m.motion.li
+          whileHover={{ scale: 1.02, x: 6 }}
+          transition={{ type: "spring", stiffness: 140, damping: 14 }}
+          {...props}
+        />
+      );
+      return { default: Item };
+    }),
+  { ssr: false, loading: () => <li /> }
+);
+
+const AnimatedAside = dynamic(
+  () =>
+    import("framer-motion").then((m) => {
+      const Aside = (props: any) => (
+        <m.motion.aside
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "circOut" }}
+          {...props}
+        />
+      );
+      return { default: Aside };
+    }),
+  { ssr: false, loading: () => <aside /> }
+);
+
+// static/social constants
 const socials = [
   {
     id: "instagram",
@@ -14,7 +77,6 @@ const socials = [
     href: "https://www.instagram.com/the_jungleparadise",
     short: "@the_jungleparadise",
   },
-
   {
     id: "tiktok",
     label: "TikTok",
@@ -26,16 +88,15 @@ const socials = [
 const PHONE = "+234 8137642173";
 const EMAIL = "support@jungleparadise.xyz";
 
-// Event: set your event date/time in ISO format and human string
+// Event meta (kept as constants)
 const EVENT_START_ISO = "2026-06-20T21:00:00+01:00"; // Nigeria time (WAT)
 const EVENT_END_ISO = "2026-06-21T03:00:00+01:00"; // Nigeria time (WAT)
 const EVENT_TITLE = "Wild Paradise — Jungle Beach Party";
 const EVENT_LOCATION = "Lagos, Nigeria";
 
-function googleCalendarLink() {
-  // Format: https://calendar.google.com/calendar/u/0/r/eventedit?text=...&dates=YYYYMMDDTHHMMSSZ/...
-  const start = EVENT_START_ISO.replace(/[-:]/g, "").split(".")[0] + "Z";
-  const end = EVENT_END_ISO.replace(/[-:]/g, "").split(".")[0] + "Z";
+function buildCalendarLink(startIso: string, endIso: string) {
+  const start = startIso.replace(/[-:]/g, "").split(".")[0] + "Z";
+  const end = endIso.replace(/[-:]/g, "").split(".")[0] + "Z";
   const url = new URL("https://calendar.google.com/calendar/u/0/r/eventedit");
   url.searchParams.set("text", EVENT_TITLE);
   url.searchParams.set("dates", `${start}/${end}`);
@@ -47,34 +108,28 @@ function googleCalendarLink() {
   return url.toString();
 }
 
-export default function About(): JSX.Element {
+export default function ContactPage(): JSX.Element {
+  // memoize calendar link so it's not rebuilt on every render
+  const calendarLink = useMemo(
+    () => buildCalendarLink(EVENT_START_ISO, EVENT_END_ISO),
+    []
+  );
+
   return (
     <main className="overflow-hidden min-h-screen bg-black relative text-slate-100 py-16 px-6">
-      <TargetCursor
-        spinDuration={2}
-        hideDefaultCursor={true}
-        parallaxOn={true}
-      />
-      <video
-        aria-hidden="true"
-        className="absolute inset-0 h-full w-full object-cover opacity-60"
-        autoPlay
-        loop
-        muted
-        playsInline
-      >
-        <source src="/bg.mp4" type="video/mp4" />
-      </video>
+      <BackgroundVideo />
+      <div className="absolute inset-0 bg-black/60" />
 
-      <div className="absolute inset-0 bg-black/60 "></div>
-      <div className="max-w-5xl mx-auto">
-        <div className="max-w-[320px] z-50 mx-auto flex justify-center items-center flex-col gap-5 cursor-target mb-5">
+      <TargetCursor spinDuration={2} hideDefaultCursor parallaxOn />
+
+      <div className="max-w-5xl mx-auto relative z-20">
+        <div className="max-w-[320px] mx-auto flex justify-center items-center flex-col gap-5 cursor-target mb-5">
           <Image
             src="/logo.png"
             alt="logo"
             width={120}
             height={120}
-            sizes="320px"
+            sizes="120px"
             className="transition-transform duration-500 group-hover:scale-105 z-40"
             priority
           />
@@ -83,65 +138,58 @@ export default function About(): JSX.Element {
           </p>
         </div>
 
-        <div>
-          <motion.section
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "circOut" }}
-            className="relative rounded-3xl p-8 shadow-2xl bg-white/6 border border-white/6 backdrop-blur-md overflow-hidden  mb-8 cursor-target"
-            aria-labelledby="contact-heading"
-          >
-            <div style={{ marginTop: "4rem" }}>
-              <DecryptedText
-                text="Welcome to Jungle Paradise, the island escape accessible only by sea."
-                animateOn="view"
-                speed={100}
-              />
-            </div>
+        <AnimatedSection
+          className="relative rounded-3xl p-8 shadow-2xl bg-white/6 border border-white/6 backdrop-blur-md overflow-hidden mb-8 cursor-target"
+          aria-labelledby="contact-heading"
+        >
+          <div style={{ marginTop: "4rem" }}>
+            <DecryptedText
+              text="Welcome to Jungle Paradise, the island escape accessible only by sea."
+              animateOn="view"
+              speed={100}
+            />
+          </div>
 
-            <div style={{ marginTop: "4rem" }}>
-              <DecryptedText
-                text="Leave the mainland behind and board the boat to a world curated for the bold, the stylish, and the effortlessly cool. As the shore recedes, anticipation builds for the secluded haven awaiting you."
-                speed={200}
-                animateOn="view"
-                maxIterations={20}
-                characters="ABCD1234!?"
-                parentClassName="all-letters"
-                encryptedClassName="encrypted"
-              />
-            </div>
+          <div style={{ marginTop: "4rem" }}>
+            <DecryptedText
+              text="Leave the mainland behind and board the boat to a world curated for the bold, the stylish, and the effortlessly cool. As the shore recedes, anticipation builds for the secluded haven awaiting you."
+              speed={200}
+              animateOn="view"
+              maxIterations={20}
+              characters="ABCD1234!?"
+              parentClassName="all-letters"
+              encryptedClassName="encrypted"
+            />
+          </div>
 
-            <div style={{ marginTop: "2rem" }}>
-              <DecryptedText
-                text="Here, on our private island, sunlight dances through a canopy of palms, and the air is perfumed with salt spray and tropical blossoms. Every sun-drenched deck, shaded lounge, and sandy cove is thoughtfully crafted for pure, easy-going vibes."
-                animateOn="view"
-                speed={300}
-              />
-            </div>
+          <div style={{ marginTop: "2rem" }}>
+            <DecryptedText
+              text="Here, on our private island, sunlight dances through a canopy of palms, and the air is perfumed with salt spray and tropical blossoms. Every sun-drenched deck, shaded lounge, and sandy cove is thoughtfully crafted for pure, easy-going vibes."
+              animateOn="view"
+              speed={300}
+            />
+          </div>
 
-            <div style={{ marginTop: "2rem" }}>
-              <DecryptedText
-                text="This is more than a party. it's Jungle Paradise, your elevated, members-only retreat. Accessible by invitation and vessel, it blends the laid-back elegance of a beach house with the untamed beauty of an island oasis. It's a sanctuary designed for connection, barefoot luxury, and moments so pristine they feel untouched."
-                animateOn="view"
-                speed={400}
-              />
-            </div>
+          <div style={{ marginTop: "2rem" }}>
+            <DecryptedText
+              text="This is more than a party. it's Jungle Paradise, your elevated, members-only retreat. Accessible by invitation and vessel, it blends the laid-back elegance of a beach house with the untamed beauty of an island oasis. It's a sanctuary designed for connection, barefoot luxury, and moments so pristine they feel untouched."
+              animateOn="view"
+              speed={400}
+            />
+          </div>
 
-            <div style={{ marginTop: "2rem" }}>
-              <DecryptedText
-                text="Your voyage is part of the experience. Unwind, mingle with fellow travelers, and discover bliss in the most exclusive paradise where the journey is just as memorable as the destination."
-                animateOn="view"
-                speed={500}
-              />
-            </div>
-          </motion.section>
-        </div>
+          <div style={{ marginTop: "2rem" }}>
+            <DecryptedText
+              text="Your voyage is part of the experience. Unwind, mingle with fellow travelers, and discover bliss in the most exclusive paradise where the journey is just as memorable as the destination."
+              animateOn="view"
+              speed={500}
+            />
+          </div>
+        </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start ">
-          <motion.section
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "circOut" }}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          {/* Left: contact + socials */}
+          <AnimatedSection
             className="relative rounded-3xl p-8 shadow-2xl bg-white/6 border border-white/6 backdrop-blur-md overflow-hidden cursor-target mb-12"
             aria-labelledby="contact-heading"
           >
@@ -211,7 +259,7 @@ export default function About(): JSX.Element {
 
                     <a
                       className="inline-flex items-center gap-2 rounded-lg bg-white/6 px-3 py-1 text-sm text-emerald-200 hover:bg-white/8 transition"
-                      href={googleCalendarLink()}
+                      href={calendarLink}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -226,10 +274,8 @@ export default function About(): JSX.Element {
               </div>
             </div>
 
-            {/* Divider */}
             <div className="my-6 h-px bg-white/6" />
 
-            {/* Socials */}
             <div className="relative z-10">
               <h2 className="text-sm text-slate-200/80 mb-3">
                 Follow & stay updated
@@ -237,11 +283,9 @@ export default function About(): JSX.Element {
 
               <ul className="grid grid-cols-1 sm:grid-cols-1 gap-3">
                 {socials.map((s) => (
-                  <motion.li
+                  <AnimatedListItem
                     key={s.id}
                     className="rounded-xl bg-black/30 border border-white/6 p-3 flex items-center justify-between"
-                    whileHover={{ scale: 1.02, x: 6 }}
-                    transition={{ type: "spring", stiffness: 140, damping: 14 }}
                   >
                     <div>
                       <div className="text-sm text-slate-300/80">{s.label}</div>
@@ -264,20 +308,13 @@ export default function About(): JSX.Element {
                     >
                       Visit
                     </a>
-                  </motion.li>
+                  </AnimatedListItem>
                 ))}
               </ul>
             </div>
-          </motion.section>
+          </AnimatedSection>
 
-          {/* RIGHT: big event poster / social tiles */}
-          <motion.aside
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: "circOut" }}
-            className="relative rounded-3xl p-6 shadow-lg bg-white/4 border border-white/6 backdrop-blur-md flex flex-col gap-6 cursor-target"
-          >
-            {/* Poster */}
+          <AnimatedAside className="relative rounded-3xl p-6 shadow-lg bg-white/4 border border-white/6 backdrop-blur-md flex flex-col gap-6 cursor-target">
             <div className="rounded-xl overflow-hidden border border-white/6">
               <div className="relative w-full h-95 bg-linear-to-br from-primary/30 via-black/50 to-green/90 flex items-center justify-center text-slate-200/20">
                 <Image
@@ -290,7 +327,6 @@ export default function About(): JSX.Element {
               </div>
             </div>
 
-            {/* Quick contact CTA */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <div>
@@ -322,12 +358,11 @@ export default function About(): JSX.Element {
               </div>
             </div>
 
-            {/* small footer */}
             <div className="text-xs text-slate-400">
               <strong>Venue policy:</strong> This is a private event. Entry is
               subject to age and ID checks.
             </div>
-          </motion.aside>
+          </AnimatedAside>
         </div>
       </div>
     </main>
