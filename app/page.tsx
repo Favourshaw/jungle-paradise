@@ -58,12 +58,10 @@ export default function Home() {
         <source src="/bg.mp4" type="video/mp4" />
       </video>
 
-      {/* overlay for contrast */}
       <div className="absolute inset-0 bg-black/60 z-10"></div>
 
       <div className="flex flex-col justify-center my-24">
         <div className="max-w-[320px] z-40 mx-auto flex justify-center items-center flex-col gap-5 cursor-target ">
-          {/* Consider removing `priority` if this is not the real LCP image on your page */}
           <Image
             src="/logo.png"
             alt="logo"
