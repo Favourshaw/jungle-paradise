@@ -124,7 +124,7 @@ export default function BuyOrVendorModal({
                 </button>
 
                 <button
-                  onClick={() => go("/vendor")}
+                  onClick={() => go("/vendors")}
                   className="w-full py-3 rounded-xl text-sm font-semibold flex items-center justify-center gap-3 transition-transform active:scale-95 cursor-target"
                   aria-label="Become a vendor"
                 >
