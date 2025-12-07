@@ -7,6 +7,7 @@ import React from "react";
 import Payment from "./payment";
 import Tix from "./Tix";
 import Portal from "./Portal";
+import TixVip from "./TixVip";
 
 interface TicketProps {
   tier: "EARLY BIRD" | "REGULAR" | "VIP";
@@ -16,11 +17,11 @@ interface TicketProps {
   maskImage?: string;
   highlightColor?: string;
   disabled?: boolean;
-  // NEW props for per-ticket color mask / blur
+
   maskColor?: string; // CSS color e.g. "rgba(34,197,94,0.18)" or "#0f766e"
   maskOpacity?: number; // 0..1, multiplies alpha if using a solid color
   maskBlur?: number; // px amount to blur the mask (creates soft haze)
-  maskBlendMode?: React.CSSProperties["mixBlendMode"]; // e.g. "overlay" | "multiply"
+  maskBlendMode?: React.CSSProperties["mixBlendMode"];
 }
 
 type PopupState = "main" | "crypto" | "naira" | null;
@@ -33,13 +34,12 @@ export default function VipTicket({
   maskImage = "/mask-vignette.png",
   highlightColor = "#CCFF00",
   disabled = false,
-  // NEW defaults
+
   maskColor = "rgba(6,95,70,0.22)",
   maskOpacity = 1,
   maskBlur = 10,
   maskBlendMode = "overlay",
 }: TicketProps) {
-  // derive final mask style (if maskColor contains alpha, maskOpacity multiplies it)
   const maskStyle: React.CSSProperties = {
     background: maskColor,
     opacity: maskOpacity,
@@ -79,7 +79,6 @@ export default function VipTicket({
           }
         }}
       >
-        {/* background image */}
         <div className="absolute inset-0">
           <Image
             src={bgImage}
@@ -89,13 +88,10 @@ export default function VipTicket({
           />
         </div>
 
-        {/* NEW: per-ticket color mask (tint + blur) */}
         <div className="absolute inset-0" style={maskStyle} aria-hidden />
 
-        {/* extra vignette/darken to improve contrast */}
         <div className="absolute inset-0 bg-black/28 pointer-events-none" />
 
-        {/* content */}
         <div className="relative px-6 py-8 text-center space-y-3 z-10">
           <div className="flex justify-center">
             <Image src="/logo.png" alt="logo" width={72} height={72} />
@@ -115,7 +111,6 @@ export default function VipTicket({
             {price}$
           </div>
 
-          {/* old price + animated strike */}
           {oldPrice && (
             <div className="relative w-fit mx-auto">
               <span className="text-xl font-semibold text-white/75">
@@ -131,7 +126,7 @@ export default function VipTicket({
           )}
 
           <p className="text-green-200 text-md sm:text-lg font-semibold tracking-wide">
-            BOAT RIDES + VIP ACCESS + COMPLIMENTARY COCKTAILS + FOOD
+            BOAT RIDES + ALL ACCESS + UNLIMITED COCKTAILS + FOOD
           </p>
 
           <p className="text-xs mt-4 text-green-300 tracking-wider">
@@ -139,7 +134,6 @@ export default function VipTicket({
           </p>
         </div>
 
-        {/* animated glow border */}
         <motion.div
           className="absolute inset-0 rounded-xl border-2 pointer-events-none"
           style={{ borderColor: highlightColor }}
@@ -148,7 +142,6 @@ export default function VipTicket({
         />
       </motion.div>
 
-      {/* Popups */}
       <AnimatePresence>
         {popup === "main" && (
           <Portal>
@@ -160,117 +153,30 @@ export default function VipTicket({
                 exit={{ opacity: 0 }}
                 onClick={() => setPopup(null)}
               />
-
-              <motion.div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
-                <motion.div
-                  className="bg-[#002800] p-8 rounded-xl max-w-sm w-full text-center space-y-6 shadow-2xl"
-                  initial={{ scale: 0.9, opacity: 0, y: 20 }}
-                  animate={{ scale: 1, opacity: 1, y: 0 }}
-                  exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                >
-                  <h2 className="text-2xl font-bold text-[#b8ffa0]">
-                    Choose Payment Method
-                  </h2>
-
-                  <div className="grid gap-3">
-                    <button
-                      className="w-full py-3 bg-[#b8ffa0] text-[#002800] rounded-lg font-bold"
-                      onClick={() => setPopup("crypto")}
-                    >
-                      R.S.V.P
-                    </button>
-                  </div>
-
-                  <button
-                    className="mt-3 text-white underline"
-                    onClick={() => setPopup(null)}
-                  >
-                    Cancel
-                  </button>
-                </motion.div>
-              </motion.div>
-            </>
-          </Portal>
-        )}
-        {popup === "crypto" && (
-          <Portal>
-            <>
-              <motion.div
-                className="fixed inset-0 bg-black/70 z-[90] cursor-pointer"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setPopup(null)}
-              />
-
               <motion.div className="fixed inset-0 flex items-center justify-center z-[100] p-4">
                 <motion.div
                   className="
-          max-w-sm w-full p-8 rounded-2xl text-center space-y-6
-          border border-white/20
-          bg-white/10 
-          backdrop-blur-xl 
-          shadow-[0_8px_30px_rgba(0,0,0,0.4)]
-        "
+                  max-w-4xl w-full p-8 rounded-2xl text-center space-y-6
+                  border border-white/20
+                  bg-white/10 
+                  backdrop-blur-xl 
+                  shadow-[0_8px_30px_rgba(0,0,0,0.4)]
+                "
                   initial={{ scale: 0.9, opacity: 0, y: 20 }}
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.9, opacity: 0, y: 20 }}
                 >
-                  <h2 className="text-2xl font-bold text-[#b8ffa0] drop-shadow-md">
-                    Crypto Payment Info
-                  </h2>
+                  {/* Render Payment component (developer: include widget inside Payment) */}
+                  <TixVip />
 
-                  <p className="text-white/90">
-                    To pay with crypto, please contact us:
-                  </p>
-
-                  <div className="space-y-1">
-                    <a
-                      className="block text-white font-semibold hover:text-[#b8ffa0] transition"
-                      href="tel:+2348137642173"
+                  <div className="mt-4 text-right">
+                    <button
+                      className="text-white underline"
+                      onClick={() => setPopup(null)}
                     >
-                      Call: +2348137642173
-                    </a>
-                    <a
-                      className="block text-white font-semibold hover:text-[#b8ffa0] transition"
-                      href="mailto:support@jungleparadise.xyz"
-                    >
-                      Email: support@jungleparadise.xyz
-                    </a>
+                      Close
+                    </button>
                   </div>
-
-                  <div className="flex gap-3 justify-center mt-4">
-                    <a
-                      href="tel:+2348137642173"
-                      className="
-              px-4 py-2 rounded-lg font-semibold
-              bg-[#b8ffa0]/90 text-[#002800]
-              shadow hover:bg-[#b8ffa0] 
-              transition
-            "
-                    >
-                      Call
-                    </a>
-
-                    <a
-                      href="mailto:support@jungleparadise.xyz"
-                      className="
-              px-4 py-2 rounded-lg font-semibold
-              bg-white/90 text-[#002800]
-              shadow hover:bg-white 
-              transition
-            "
-                    >
-                      Email
-                    </a>
-                  </div>
-
-                  <button
-                    className="mt-3 text-white/80 underline hover:text-white transition"
-                    onClick={() => setPopup(null)}
-                  >
-                    Close
-                  </button>
                 </motion.div>
               </motion.div>
             </>
