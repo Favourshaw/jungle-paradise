@@ -1,4 +1,3 @@
-// components/Header.tsx
 "use client";
 
 import React, { JSX } from "react";
@@ -9,11 +8,8 @@ import { BatteryFull, WifiCog, WifiHigh } from "lucide-react";
 export default function Header(): JSX.Element {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 pointer-events-auto font-sans">
-      {/* Mac-style (desktop) */}
       <div className="hidden md:flex items-center justify-between h-12 px-4 bg-linear-to-b from-white/4 to-white/2 backdrop-blur-md border-b border-white/6 shadow-sm">
-        {/* left: traffic lights + title */}
         <div className="flex items-center gap-3">
-          {/* traffic lights */}
           <div className="flex items-center gap-2 mr-3">
             <button
               aria-label="close"

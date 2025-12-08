@@ -2,29 +2,20 @@
 import React, { JSX } from "react";
 import { motion } from "framer-motion";
 
-/**
- * FloatingBackgroundImages.tsx
- * - Use images (PNG/WebP/SVG) for background floating elements
- * - Bigger sizes, more items, improved animations (floating + slow orbit + staggered delays)
- * - Drop this file into `components/` and render <FloatingBackgroundImages /> right after <TargetCursor />
- *
- * Requirements: framer-motion, Tailwind CSS. Place your images in `public/icons/` (or adjust src paths).
- */
-
 type Item = {
   id: string;
-  src: string; // image path relative to public/
+  src: string;
   left?: string;
   top?: string;
   right?: string;
   bottom?: string;
-  size?: number; // px
-  delay?: number; // seconds
-  duration?: number; // seconds
+  size?: number;
+  delay?: number;
+  duration?: number;
   opacity?: number;
-  floatRange?: number; // px vertical amplitude
-  swayRange?: number; // px horizontal amplitude
-  rotateRange?: number; // deg
+  floatRange?: number;
+  swayRange?: number;
+  rotateRange?: number;
 };
 
 const items: Item[] = [
@@ -116,7 +107,7 @@ export default function FloatingBackgroundImages(): JSX.Element {
     <div className="pointer-events-none absolute inset-0 -z-0">
       {items.map((it) => {
         const xAmp =
-          Math.random() * (it.swayRange ?? 20) - (it.swayRange ?? 20) / 2; // randomized horizontal amplitude
+          Math.random() * (it.swayRange ?? 20) - (it.swayRange ?? 20) / 2;
         const yAmp = it.floatRange ?? 26;
         const rot =
           Math.random() * (it.rotateRange ?? 12) - (it.rotateRange ?? 12) / 2;
@@ -160,7 +151,6 @@ export default function FloatingBackgroundImages(): JSX.Element {
               className="rounded-full bg-white/2 flex items-center justify-center overflow-hidden"
               style={{ width: "100%", height: "100%", padding: 6 }}
             >
-              {/* image */}
               <img
                 src={it.src}
                 alt={it.id}
@@ -174,7 +164,6 @@ export default function FloatingBackgroundImages(): JSX.Element {
               />
             </div>
 
-            {/* subtle orbiting glow */}
             <motion.div
               aria-hidden
               className="absolute inset-0 rounded-full pointer-events-none"

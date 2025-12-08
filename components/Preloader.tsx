@@ -22,13 +22,11 @@ export default function Preloader() {
     damping: 30,
   });
 
-  // Transform springProgress to percentage string
   const progressText = useTransform(
     springProgress,
     (value) => `${Math.round(value)}%`
   );
 
-  // Particle effect component
   const Particles = () => {
     const particles = Array.from({ length: 15 }, (_, i) => i);
 
@@ -60,7 +58,6 @@ export default function Preloader() {
     );
   };
 
-  // Jungle leaf icons component
   const JungleLeaves = () => {
     const leaves = [
       { rotate: -45, delay: 0, size: "w-6 h-6" },
@@ -94,7 +91,6 @@ export default function Preloader() {
   };
 
   useEffect(() => {
-    // Show preloader on route change
     setVisible(true);
     setDisplayProgress(0);
     progress.set(0);
@@ -106,7 +102,6 @@ export default function Preloader() {
       const elapsed = Date.now() - startTime;
       const rawProgress = Math.min(elapsed / duration, 0.95);
 
-      // Smooth easing function
       const easeOutCubic = 1 - Math.pow(1 - rawProgress, 3);
       const newProgress = easeOutCubic * 95;
 
@@ -116,7 +111,6 @@ export default function Preloader() {
 
     const progressInterval = setInterval(updateProgress, 16);
 
-    // Hide after delay
     const hideTimeout = setTimeout(() => {
       clearInterval(progressInterval);
       progress.set(100);
@@ -173,11 +167,10 @@ export default function Preloader() {
               damping: 25,
               mass: 0.5,
             }}
-            className="relative bg-gradient-to-br from-gray-900/90 to-black/90 border border-white/10 rounded-3xl p-8 flex flex-col gap-6 items-center w-[90%] max-w-md shadow-2xl shadow-emerald-900/30 backdrop-blur-xl"
+            className="relative bg-linear-to-br from-gray-900/90 to-black/90 border border-white/10 rounded-3xl p-8 flex flex-col gap-6 items-center w-[90%] max-w-md shadow-2xl shadow-emerald-900/30 backdrop-blur-xl"
           >
             <JungleLeaves />
 
-            {/* Animated ring spinner with gradient */}
             <div className="relative w-20 h-20">
               <motion.div
                 className="absolute inset-0 rounded-full border-[3px] border-transparent"
@@ -212,10 +205,9 @@ export default function Preloader() {
               </div>
             </div>
 
-            {/* Text with typing effect */}
             <div className="text-center space-y-2">
               <motion.h2
-                className="text-2xl font-bold bg-gradient-to-r from-emerald-300 via-green-300 to-emerald-300 bg-clip-text text-transparent"
+                className="text-2xl font-bold bg-linear-to-r from-emerald-300 via-green-300 to-emerald-300 bg-clip-text text-transparent"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.1, type: "spring" }}
@@ -240,12 +232,12 @@ export default function Preloader() {
 
               <div className="relative h-3 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
                 <motion.div
-                  className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-400 via-green-400 to-emerald-500 rounded-full"
+                  className="absolute top-0 left-0 h-full bg-linear-to-r from-emerald-400 via-green-400 to-emerald-500 rounded-full"
                   style={{ width: springProgress }}
                   transition={{ ease: "easeOut", duration: 0.3 }}
                 />
                 <motion.div
-                  className="absolute top-0 left-0 h-full w-8 bg-gradient-to-r from-transparent via-white/40 to-transparent"
+                  className="absolute top-0 left-0 h-full w-8 bg-linear-to-r from-transparent via-white/40 to-transparent"
                   animate={{
                     x: ["-100%", "400%"],
                   }}
@@ -262,12 +254,11 @@ export default function Preloader() {
               </div>
             </div>
 
-            {/* Decorative bottom leaves */}
             <div className="absolute -bottom-6 flex gap-4">
               {[1, 2, 3].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-12 h-2 bg-gradient-to-r from-emerald-600/30 to-green-600/30 rounded-full"
+                  className="w-12 h-2 bg-linear-to-r from-emerald-600/30 to-green-600/30 rounded-full"
                   animate={{
                     scaleX: [1, 1.2, 1],
                     opacity: [0.3, 0.6, 0.3],

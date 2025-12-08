@@ -16,11 +16,10 @@ interface TicketProps {
   maskImage?: string;
   highlightColor?: string;
   disabled?: boolean;
-  // NEW props for per-ticket color mask / blur
-  maskColor?: string; // CSS color e.g. "rgba(34,197,94,0.18)" or "#0f766e"
-  maskOpacity?: number; // 0..1, multiplies alpha if using a solid color
-  maskBlur?: number; // px amount to blur the mask (creates soft haze)
-  maskBlendMode?: React.CSSProperties["mixBlendMode"]; // e.g. "overlay" | "multiply"
+  maskColor?: string;
+  maskOpacity?: number;
+  maskBlur?: number;
+  maskBlendMode?: React.CSSProperties["mixBlendMode"];
 }
 
 type PopupState = "main" | "crypto" | "naira" | null;
@@ -33,13 +32,12 @@ export default function JungleTicket({
   maskImage = "/mask-vignette.png",
   highlightColor = "#CCFF00",
   disabled = false,
-  // NEW defaults
+
   maskColor = "rgba(6,95,70,0.22)",
   maskOpacity = 1,
   maskBlur = 10,
   maskBlendMode = "overlay",
 }: TicketProps) {
-  // derive final mask style (if maskColor contains alpha, maskOpacity multiplies it)
   const maskStyle: React.CSSProperties = {
     background: maskColor,
     opacity: maskOpacity,
@@ -89,13 +87,10 @@ export default function JungleTicket({
           />
         </div>
 
-        {/* NEW: per-ticket color mask (tint + blur) */}
         <div className="absolute inset-0" style={maskStyle} aria-hidden />
 
-        {/* extra vignette/darken to improve contrast */}
         <div className="absolute inset-0 bg-black/28 pointer-events-none" />
 
-        {/* content */}
         <div className="relative px-6 py-8 text-center space-y-3 z-10">
           <div className="flex justify-center">
             <Image src="/logo.png" alt="logo" width={72} height={72} />
@@ -115,7 +110,6 @@ export default function JungleTicket({
             {price}$
           </div>
 
-          {/* old price + animated strike */}
           {oldPrice && (
             <div className="relative w-fit mx-auto">
               <span className="text-xl font-semibold text-white/75">
@@ -139,7 +133,6 @@ export default function JungleTicket({
           </p>
         </div>
 
-        {/* animated glow border */}
         <motion.div
           className="absolute inset-0 rounded-xl border-2 pointer-events-none"
           style={{ borderColor: highlightColor }}
@@ -148,7 +141,6 @@ export default function JungleTicket({
         />
       </motion.div>
 
-      {/* Popups */}
       <AnimatePresence>
         {popup === "main" && (
           <Portal>
@@ -173,7 +165,6 @@ export default function JungleTicket({
                   animate={{ scale: 1, opacity: 1, y: 0 }}
                   exit={{ scale: 0.9, opacity: 0, y: 20 }}
                 >
-                  {/* Render Payment component (developer: include widget inside Payment) */}
                   <Tix />
 
                   <div className="mt-4 text-right">

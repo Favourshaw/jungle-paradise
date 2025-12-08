@@ -8,13 +8,11 @@ export default function EmailPopup() {
   const msgRef = useRef<HTMLDivElement | null>(null);
   const submitBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  // Show popup after a small delay
   useEffect(() => {
     const timer = setTimeout(() => setOpen(true), 400);
     return () => clearTimeout(timer);
   }, []);
 
-  // Floating leaf animation on click
   useEffect(() => {
     function onDocClick(e: MouseEvent) {
       const target = e.target as HTMLElement;
@@ -195,7 +193,7 @@ export default function EmailPopup() {
                 ✕
               </button>
 
-              <div className="rounded-xl p-6 bg-gradient-to-b from-white/4 to-white/6 backdrop-blur-xl border border-white/10 shadow-lg">
+              <div className="rounded-xl p-6 bg-linear-to-b from-white/4 to-white/6 backdrop-blur-xl border border-white/10 shadow-lg">
                 <h3 className="text-xl font-bold mb-2 text-white">
                   Join the Expedition
                 </h3>
@@ -219,7 +217,7 @@ export default function EmailPopup() {
                     <button
                       type="submit"
                       ref={submitBtnRef}
-                      className="w-full py-3 rounded-lg font-semibold bg-gradient-to-r from-[#7ef9a3]/20 via-[#9be7ff]/10 to-[#ff9bd1]/10 border border-white/10 text-white"
+                      className="w-full py-3 rounded-lg font-semibold bg-linear-to-r from-[#7ef9a3]/20 via-[#9be7ff]/10 to-[#ff9bd1]/10 border border-white/10 text-white"
                     >
                       Join the List
                     </button>

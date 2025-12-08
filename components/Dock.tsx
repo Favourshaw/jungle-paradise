@@ -137,7 +137,7 @@ function DockLabel({ children, className = "", isHovered }: DockLabelProps) {
           exit={{ opacity: 0, y: 0, scale: 0.9 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
           className={`${className} absolute -top-8 left-1/2 w-fit min-w-max whitespace-pre rounded-xl backdrop-blur-xl 
-            bg-gradient-to-b from-white/20 to-white/10 border border-white/25 
+            bg-linear-to-b from-white/20 to-white/10 border border-white/25 
             shadow-[0_8px_32px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.3)]
             px-3 py-2 text-sm font-medium text-white/90`}
           role="tooltip"
@@ -206,7 +206,7 @@ export default function Dock({
         }}
         className={`${className} fixed bottom-4 left-1/2 transform -translate-x-1/2 
           flex items-end w-fit gap-4 rounded-3xl backdrop-blur-2xl backdrop-saturate-200
-          bg-gradient-to-b from-white/15 to-white/5 border border-white/25
+          bg-linear-to-b from-white/15 to-white/5 border border-white/25
           shadow-[0_20px_60px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.3),inset_0_-1px_0_rgba(0,0,0,0.2)]
           pb-3 px-6`}
         style={{ height: panelHeight }}

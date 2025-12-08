@@ -15,7 +15,7 @@ export default function DramaticEmailForm(): JSX.Element {
     e.preventDefault();
     if (!validateEmail(email)) {
       setStatus("error");
-      // allow the error animation to be observable, then reset to idle so it can retrigger
+
       window.setTimeout(() => setStatus("idle"), 900);
       return;
     }
