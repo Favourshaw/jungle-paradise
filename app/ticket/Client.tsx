@@ -1,4 +1,3 @@
-// app/tickets/page.tsx
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import React from "react";
@@ -31,9 +30,7 @@ const Rsvp = dynamic(() => import("@/components/Rsvp"), {
 /* Background video rendered client-side to avoid forcing the server to include video playback JS */
 const BackgroundVideo = dynamic(
   () =>
-    // small wrapper component to ensure this runs only in browser
     import("@/components/BgVideo").catch(() => {
-      // fallback: a simple client-side inline video if the component doesn't exist
       return function FallbackVideo() {
         return (
           <video
@@ -56,17 +53,13 @@ const BackgroundVideo = dynamic(
 export default function Client() {
   return (
     <div className="min-h-screen bg-[#061618] py-20 px-6 flex flex-col gap-8 justify-center items-center">
-      {/* Client-only cursor & floating visuals */}
       <TargetCursor spinDuration={2} hideDefaultCursor parallaxOn />
       <FloatingBackgroundImages />
 
-      {/* Background video (client-only) */}
       <BackgroundVideo />
 
-      {/* dark overlay */}
       <div className="fixed inset-0 bg-black/60 z-10 pointer-events-none" />
 
-      {/* Header block with small LCP image */}
       <div className="max-w-[320px] z-40 mx-auto flex justify-center items-center flex-col gap-5 cursor-target">
         <Image
           src="/logo.png"
