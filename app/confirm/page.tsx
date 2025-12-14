@@ -1,126 +1,127 @@
-// "use client";
-// import React, { useState, useEffect } from "react";
-// import { useRouter } from "next/router";
+"use client";
 
-// export default function Confirm() {
-//   const router = useRouter();
-//   const { ref } = router.query;
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
+import { GiMonkey } from "react-icons/gi";
 
-//   const [form, setForm] = useState({
-//     full_name: "",
-//     email: "",
-//     phone: "",
-//     address_line1: "",
-//     address_line2: "",
-//     city: "",
-//     state: "",
-//     postal_code: "",
-//     country: "",
-//   });
-//   const [loading, setLoading] = useState(false);
+// dynamic imports for heavy / non-critical components
+const TargetCursor = dynamic(() => import("@/components/TargetCursor"), {
+  ssr: false,
+  loading: () => null,
+});
+const FloatingBackgroundImages = dynamic(
+  () => import("@/components/FloatingIcons"),
+  { ssr: false, loading: () => null }
+);
+const CardSwapItem = dynamic(() => import("@/components/CardSwapItem"), {
+  ssr: false,
+  loading: () => <div className="h-80 md:h-[600px]"></div>,
+});
+const BuyOrVendorModal = dynamic(() => import("@/components/TicketVendor"), {
+  ssr: false,
+});
+const SpookyGlassButton = dynamic(() => import("@/components/Button"), {
+  ssr: false,
+  loading: () => <button className="btn-placeholder">Loading…</button>,
+});
+const Countdown = dynamic(() => import("@/components/countdown"), {
+  ssr: false,
+  loading: () => null,
+});
+const EmailPopup = dynamic(() => import("@/components/EmailPopup"), {
+  ssr: false,
+  loading: () => null,
+});
 
-//   useEffect(() => {
-//     // If ref not present after a short time, you could redirect back
-//     // Here we just allow the user to fill in reference manually if needed.
-//   }, [ref]);
+export default function Home() {
+  const router = useRouter();
+  const pus = () => {
+    router.push("/");
+  };
 
-//   const onChange = (
-//     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-//   ) => setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
+  return (
+    <div className="overflow-hidden min-h-screen bg-black relative jungle-ambient particles">
+      <TargetCursor spinDuration={2} hideDefaultCursor parallaxOn />
 
-//   const submit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!ref) {
-//       alert("Missing payment reference.");
-//       return;
-//     }
-//     setLoading(true);
-//     try {
-//       const res = await fetch("https://jungleparadise.xyz/save_address.php", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ reference: ref, ...form }),
-//       });
-//       const data = await res.json();
-//       if (res.ok && data.saved) {
-//         alert("Address saved — thank you!");
-//         router.push("/thank-you"); // optional thank-you page
-//       } else {
-//         console.error("Save failed", data);
-//         alert("Failed to save address. Contact support.");
-//       }
-//     } catch (err) {
-//       console.error(err);
-//       alert("Network error while saving address.");
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+      <FloatingBackgroundImages />
 
-//   return (
-//     <main style={{ padding: 24 }}>
-//       <h1>Enter your shipping address</h1>
-//       <p>
-//         Payment reference: <strong>{ref ?? "—"}</strong>
-//       </p>
-//       <form onSubmit={submit} style={{ maxWidth: 600 }}>
-//         <input
-//           name="full_name"
-//           placeholder="Full name"
-//           onChange={onChange}
-//           required
-//         />
-//         <input name="email" placeholder="Email" onChange={onChange} required />
-//         <input name="phone" placeholder="Phone" onChange={onChange} />
-//         <input
-//           name="address_line1"
-//           placeholder="Address line 1"
-//           onChange={onChange}
-//           required
-//         />
-//         <input
-//           name="address_line2"
-//           placeholder="Address line 2"
-//           onChange={onChange}
-//         />
-//         <input name="city" placeholder="City" onChange={onChange} required />
-//         <input name="state" placeholder="State" onChange={onChange} />
-//         <input
-//           name="postal_code"
-//           placeholder="Postal code"
-//           onChange={onChange}
-//         />
-//         <input
-//           name="country"
-//           placeholder="Country"
-//           onChange={onChange}
-//           required
-//         />
-//         <div style={{ marginTop: 12 }}>
-//           <button type="submit" disabled={loading}>
-//             {loading ? "Saving…" : "Save address"}
-//           </button>
-//         </div>
-//       </form>
-//       <style jsx>{`
-//         input {
-//           display: block;
-//           width: 100%;
-//           margin: 8px 0;
-//           padding: 8px;
-//         }
-//         button {
-//           padding: 8px 12px;
-//         }
-//       `}</style>
-//     </main>
-//   );
-// }
+      <video
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-60"
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster="/monk4.jpg"
+      >
+        <source src="/bg.mp4" type="video/mp4" />
+      </video>
 
-import React from "react";
+      <div className="absolute inset-0 bg-black/60 z-10"></div>
 
-function page() {
-  return <div>page</div>;
+      <div className="flex flex-col justify-center my-24">
+        <div className="max-w-[320px] z-40 mx-auto flex justify-center items-center flex-col gap-5 cursor-target ">
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={120}
+            height={120}
+            sizes="120px"
+            className="transition-transform duration-500 group-hover:scale-105"
+            priority
+          />
+          <p className="text-center font-serif uppercase text-green">
+            wild paradise awaits
+          </p>
+        </div>
+
+        <div
+          className="relative z-30 flex flex-col lg:flex-row lg:items-center lg:justify-between
+               bg-white/10 backdrop-blur-xl border border-transparent
+               m-6 sm:m-12 md:m-24 rounded-3xl p-6 sm:p-10 shadow-[0_0_40px_rgba(0,0,0,0.4)]
+               hover:shadow-primary transition-all duration-500 overflow-hidden "
+        >
+          <div className="max-w-2xl space-y-4 ml-0 md:ml-32">
+            <div className="cursor-target flex gap-4 justify-center items-center text-2xl md:text-4xl font-semibold text-text">
+              <GiMonkey size={55} className="text-text animate-bounce" />
+              The gates have opened… and you’re in.
+            </div>
+
+            <div>
+              <div className="font-eater cursor-target leading-relaxed text-green text-xs sm:text-sm md:text-2xl">
+                It’s done. <br /> <br />
+                Your spot is secured.
+                <br /> <br />
+                Your ticket is confirmed and on its way to your address.
+                <br /> <br />
+                Now prepare yourself — the lights, the music, the energy…
+                everything is coming for you.
+              </div>
+
+              <div className="cursor-target">
+                <SpookyGlassButton onClick={pus} className="w-full mt-5">
+                  Go Home
+                </SpookyGlassButton>
+              </div>
+
+              <div>
+                <Countdown targetDate="2025-12-20T21:00:00+01:00" />
+              </div>
+            </div>
+          </div>
+
+          {/* CARD SECTION */}
+          <div>
+            <div className="z-20 relative h-80 md:h-[600px]">
+              <CardSwapItem />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <EmailPopup />
+    </div>
+  );
 }
-
-export default page;
