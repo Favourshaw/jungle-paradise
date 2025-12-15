@@ -27,7 +27,6 @@ const Rsvp = dynamic(() => import("@/components/Rsvp"), {
   loading: () => null,
 });
 
-/* Background video rendered client-side to avoid forcing the server to include video playback JS */
 const BackgroundVideo = dynamic(
   () =>
     import("@/components/BgVideo").catch(() => {
@@ -84,6 +83,7 @@ export default function Client() {
           <JungleTicket
             tier="EARLY BIRD"
             price="35"
+            disabled
             oldPrice="50"
             highlightColor="#C7FF00"
             bgImage="/jp3.jpg"
@@ -96,7 +96,6 @@ export default function Client() {
           <JungleTicket
             tier="REGULAR"
             price="50"
-            disabled
             highlightColor="#FFD166"
             bgImage="/monk.jpg"
             maskColor="rgba(240,160,40,0.14)"
